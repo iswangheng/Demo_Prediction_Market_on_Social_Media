@@ -1,0 +1,27 @@
+
+
+#calculating_left {
+    width: 576px;
+    height: 576px;
+    margin: 2px;
+    positoin: relative;
+    float: left;
+    overflow: hidden;
+    background-color: #C0DEED;
+    -webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+#calculating_sidebar {
+    width: 356px;
+    height: 576px;
+    margin: 2px;
+    float: left;
+    overflow: hidden;
+    background-color: transparent;
+    -webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+

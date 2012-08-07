@@ -1,0 +1,168 @@
+$def with()
+
+$:render.header()
+
+
+<script src="static/js/springy.js"></script>
+<script src="static/js/springyui.js"></script>
+
+<script src="static/js/analyzing.js"></script>
+
+
+<script type="text/javascript" charset="utf-8">
+	var graph = new Graph();
+
+	var nodes_list = new Array();
+	var nodes = new Array();
+//	nodes_list = [{label:'Swarm', con:'1'}, {label: 'Benben', con:'2'}, {label:'james', con:'3'}];
+	for(var i = 0; i < 38; i++) {
+		var default_node = {label: 'default', con: '1', chosen: '0'}
+		default_node.label = "default_"+ i + "";
+		default_node.con = i;
+		if (i%3 == 0) {
+			default_node.chosen = '1';
+		}
+		nodes_list.push(default_node);
+	}
+
+	for (var i = 0; i < nodes_list.length; i++) {
+		var new_node = graph.newNode({label: nodes_list[i].label, con: nodes_list[i].con, chosen: nodes_list[i].chosen});
+		nodes.push(new_node);
+	}
+
+	for (var i = 1; i < nodes.length; i++) {
+		graph.newEdge(nodes[0], nodes[i]);
+	}		
+
+//	graph.newEdge(nodes[0], nodes[1], {color: '#00a0b0'});
+/*
+	jQuery(function(){
+			var springy = jQuery('#springydemo').springy({
+				graph: graph,
+				stiffness: 200,
+				repulsion: 400,
+				damping: 0.7
+				});
+		})
+*/
+
+	var new_graph = new Graph();
+	var new_nodes_list = new Array();
+	new_nodes_list = [{label:'Swarm', con:'1'}, {label: 'Benben', con:'2'}, {label:'james', con:'3'}];
+	for(var i = 0; i < new_nodes_list.length; i++) {
+		new_graph.newNode({label: nodes_list[i].label});
+	}
+
+
+</script>
+
+<div id="parent">
+
+    <div id="analyzing_left">
+		<canvas id = "analyzing_canvas" width = "576" height = "576" />
+    </div>
+    
+    <div id="analyzing_sidebar">
+		<ul class="nav nav-tabs">
+            <li class="active" id="graph_structure_li"><a href="#tab_graph" data-toggle="tab">Graph Structure</a></li>
+            <li id="historical_records_li"><a href="#tab_historical" data-toggle="tab">Historical Records</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_graph">
+                <table class="table table-striped">
+                <!--<thead>
+                <tr><th colspan="3">Twitter Users</th></tr>
+                </thead>
+                <tbody>-->
+                    <tr>
+                        <th>user img</th>
+						<th><span id="username_1">username</span></th>
+                        <th>confidence: 1</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 2</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 3</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 4</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 5</th>
+					</tr>
+					<tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 1</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 2</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 3</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 4</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 5</th>
+                    </tr>
+					<tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 1</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 2</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 3</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 4</th>
+                    </tr>
+                    <tr>
+                        <th>user img</th>
+                        <th>username</th>
+                        <th>confidence: 5</th>
+                    </tr>
+
+
+                </tbody>
+            </table>
+            </div>
+            <div class="tab-pane" id="tab_historical">
+                <p>Howdy, I'm in Section 2.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+$:render.foot()

@@ -1,0 +1,53 @@
+$def with()
+
+$:render.header()
+
+
+<script src="static/js/springy.js"></script>
+<script src="static/js/springyui.js"></script>
+
+<script src="static/js/calculating.js"></script>
+
+
+<script type="text/javascript" charset="utf-8">
+	var graph = new Graph();
+
+	var nodes_list = new Array();
+	var nodes = new Array();
+//	nodes_list = [{label:'Swarm', con:'1'}, {label: 'Benben', con:'2'}, {label:'james', con:'3'}];
+	for(var i = 0; i < 38; i++) {
+		var default_node = {label: 'default', con: '1', chosen: '0'}
+		default_node.label = "default_"+ i + "";
+		default_node.con = i;
+		if (i%3 == 0) {
+			default_node.chosen = '1';
+		}
+		nodes_list.push(default_node);
+	}
+
+	for (var i = 0; i < nodes_list.length; i++) {
+		var new_node = graph.newNode({label: nodes_list[i].label, con: nodes_list[i].con, chosen: nodes_list[i].chosen});
+		nodes.push(new_node);
+	}
+
+	for (var i = 1; i < nodes.length; i++) {
+		graph.newEdge(nodes[0], nodes[i]);
+	}		
+
+</script>
+
+<div id="parent">
+
+    <div id="calculating_left">
+		<canvas id = "calculating_canvas" width = "576" height = "576" />
+    </div>
+    
+    <div id="calculating_sidebar">
+    </div>
+
+</div>
+
+
+
+
+$:render.foot()
