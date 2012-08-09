@@ -8,34 +8,6 @@ $:render.header()
 
 <script src="static/js/calculating.js"></script>
 
-
-<script type="text/javascript" charset="utf-8">
-	var graph = new Graph();
-
-	var nodes_list = new Array();
-	var nodes = new Array();
-//	nodes_list = [{label:'Swarm', con:'1'}, {label: 'Benben', con:'2'}, {label:'james', con:'3'}];
-	for(var i = 0; i < 38; i++) {
-		var default_node = {label: 'default', con: '1', chosen: '0'}
-		default_node.label = "default_"+ i + "";
-		default_node.con = i;
-		if (i%3 == 0) {
-			default_node.chosen = '1';
-		}
-		nodes_list.push(default_node);
-	}
-
-	for (var i = 0; i < nodes_list.length; i++) {
-		var new_node = graph.newNode({label: nodes_list[i].label, con: nodes_list[i].con, chosen: nodes_list[i].chosen});
-		nodes.push(new_node);
-	}
-
-	for (var i = 1; i < nodes.length; i++) {
-		graph.newEdge(nodes[0], nodes[i]);
-	}		
-
-</script>
-
 <div id="parent">
 
     <div id="calculating_left">
@@ -43,9 +15,78 @@ $:render.header()
     </div>
     
     <div id="calculating_sidebar">
-    </div>
+        <div id="calculating_sidebar_up">
+            <div id="calculating_sidebar_textarea_title">
+                <span align="center"> <strong> <h4> Users You Have Selected </h4> </strong> </span>
+            </div>
+            <div id="calculating_sidebar_textarea">
+                <textarea class="input-xlarge calculating_textarea" id="calculating_textarea" rows="10"></textarea>
+            </div>
+        </div> 
+        <div id="calculating_sidebar_down">
+            <div id="calculating_sidebar_calculatebtn">
+                <button id="calculate_btn" class="btn btn-primary">
+                    Calculate
+                </button>
+            </div>
+            <div id="calculating_sidebar_clearbtn">
+                <button id="clear_btn" class="btn btn-success">
+                    Clear
+                </button>
+            </div>
+            <div id="calculating_sidebar_confidence_cost">
+                <span><strong> Calculating Result: </strong></span>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_market" data-toggle="tab">Market</a></li>
+                    <li><a href="#tab_pay" data-toggle="tab">Pay As You Go</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_market">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <td><strong>Confidence: </strong></td>
+                                <td>
+                                <input id="publishing_market_confidence_input" type="text" class="input-small" value="..." disabled />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Cost: </strong>
+                                </td>
+                                <td>
+                                    <input id="publishing_market_cost_input" type="text" class="input-small" value="..." disabled />
+                                </td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab_pay">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <td><strong>Confidence: </strong></td>
+                                <td>
+                                    <input id="publishing_pay_confidence_input" type="text" class="input-small" value="..." disabled />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Cost: </strong>
+                                </td>
+                                <td>
+                                    <input id="publishing_pay_cost_input" type="text" class="input-small" value="..." disabled />
+                                </td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>  <!--  end_div for class= tab-content  -->
+            </div> <!--  end_div for id= calculating_sidear_confidence_cost  -->
+        </div>  <!--  end_div for id= calculating_sidebar_down  -->
+    </div>  <!--  end_div for id= calculating_sidebar  -->
 
-</div>
+</div>   <!-- end_div for id= parent  -->
 
 
 

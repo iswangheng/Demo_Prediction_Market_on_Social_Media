@@ -6,159 +6,141 @@ $:render.header()
 <script src="static/js/springy.js"></script>
 <script src="static/js/springyui.js"></script>
 
-<script src="static/js/analyzing.js"></script>
-
-
-<script type="text/javascript" charset="utf-8">
-	var graph = new Graph();
-
-	var nodes_list = new Array();
-	var nodes = new Array();
-//	nodes_list = [{label:'Swarm', con:'1'}, {label: 'Benben', con:'2'}, {label:'james', con:'3'}];
-	for(var i = 0; i < 38; i++) {
-		var default_node = {label: 'default', con: '1', chosen: '0'}
-		default_node.label = "default_"+ i + "";
-		default_node.con = i;
-		if (i%3 == 0) {
-			default_node.chosen = '1';
-		}
-		nodes_list.push(default_node);
-	}
-
-	for (var i = 0; i < nodes_list.length; i++) {
-		var new_node = graph.newNode({label: nodes_list[i].label, con: nodes_list[i].con, chosen: nodes_list[i].chosen});
-		nodes.push(new_node);
-	}
-
-	for (var i = 1; i < nodes.length; i++) {
-		graph.newEdge(nodes[0], nodes[i]);
-	}		
-
-//	graph.newEdge(nodes[0], nodes[1], {color: '#00a0b0'});
-/*
-	jQuery(function(){
-			var springy = jQuery('#springydemo').springy({
-				graph: graph,
-				stiffness: 200,
-				repulsion: 400,
-				damping: 0.7
-				});
-		})
-*/
-
-	var new_graph = new Graph();
-	var new_nodes_list = new Array();
-	new_nodes_list = [{label:'Swarm', con:'1'}, {label: 'Benben', con:'2'}, {label:'james', con:'3'}];
-	for(var i = 0; i < new_nodes_list.length; i++) {
-		new_graph.newNode({label: nodes_list[i].label});
-	}
-
-
-</script>
+<script src="static/js/publishing.js"></script>
 
 <div id="parent">
 
-    <div id="analyzing_left">
+    <div id="publishing_left">
 		<canvas id = "springydemo" width = "576" height = "576" />
     </div>
     
-    <div id="analyzing_sidebar">
-		<ul class="nav nav-tabs">
-            <li class="active" id="graph_structure_li"><a href="#tab_graph" data-toggle="tab">Graph Structure</a></li>
-            <li id="historical_records_li"><a href="#tab_historical" data-toggle="tab">Historical Records</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="tab_graph">
-                <table class="table table-striped">
-                <!--<thead>
-                <tr><th colspan="3">Twitter Users</th></tr>
-                </thead>
-                <tbody>-->
-                    <tr>
-                        <th>user img</th>
-						<th><span id="username_1">username</span></th>
-                        <th>confidence: 1</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 2</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 3</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 4</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 5</th>
-					</tr>
-					<tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 1</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 2</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 3</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 4</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 5</th>
-                    </tr>
-					<tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 1</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 2</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 3</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 4</th>
-                    </tr>
-                    <tr>
-                        <th>user img</th>
-                        <th>username</th>
-                        <th>confidence: 5</th>
-                    </tr>
-
-
-                </tbody>
-            </table>
-            </div>
-            <div class="tab-pane" id="tab_historical">
-                <p>Howdy, I'm in Section 2.</p>
+    <div id="publishing_sidebar">
+        <div id="publishing_textarea_div">
+            <span><h4>Put your question down in the input textarea</h4></span>
+            <textarea class="input-xlarge publishing_textarea" id="publishing_textarea"></textarea>
+            <div id="publishing_textarea_counter">
+                <input id="publishing_textarea_input_counter" value="140" disabled="disabled"/>
             </div>
         </div>
-    </div>
+
+        <div id="publishing_parameter_div">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_market" data-toggle="tab">Market</a></li>
+                <li><a href="#tab_pay" data-toggle="tab">Pay As You Go</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_market">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td><strong>Confidence: </strong></td>
+                            <td>
+                                <input id="publishing_confidence_input" type="text" class="input-small" value="0.75"/>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tab-pane" id="tab_pay">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td><strong>Budget: </strong></td>
+                            <td>
+                                <input id="publishing_budget_input" type="text" class="input-small" value="8675"/>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>  <!--  end_div for class= tab-content  -->
+        </div>  <!-- end-div for id= publishing_parameter_div -->
+
+        <div id="publishing_show_button_div">
+            <div id="publishing_show_btn_div">
+                <button id="publishing_show_btn" class="btn btn-primary">
+                Show Recommended Users
+                </button>
+            </div>
+            <div id="publishing_publish_btn_div">
+                <button id="publishing_publish_btn" class="btn btn-success">
+                Publish!
+                </button>
+            </div>
+        </div>  <!--  end_div for id= publishing_show_button_div  -->
+
+        <div id="publishing_users_div">
+            <div class="tabbable tabs-below">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="publishing_user_tab1">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th> User Pics</th>
+                                    <th> User Name</th>
+                                    <th> User Confidence</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="publishing_user_pic_1"> 1 </td>
+                                <td id="publishing_user_name_1"> 1 </td>
+                                <td id="publishing_user_confidence_1"> 0.3 </td>
+                            </tr>
+                            <tr>
+                                <td id="publishing_user_pic_2"> 2 </td>
+                                <td id="publishing_user_name_2"> 2 </td>
+                                <td id="publishing_user_confidence_2"> 0.43 </td>
+                            </tr>
+                            <tr>
+                                <td id="publishing_user_pic_3"> 3 </td>
+                                <td id="publishing_user_name_3"> 3 </td>
+                                <td id="publishing_user_confidence_3"> 0.7 </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="publishing_user_tab2">
+                         <table class="table">
+                            <thead>
+                                <tr>
+                                    <th> User Pics</th>
+                                    <th> User Name</th>
+                                    <th> User Confidence</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="publishing_user_pic_4"> 4 </td>
+                                <td id="publishing_user_name_4"> 4 </td>
+                                <td id="publishing_user_confidence_4"> 0.3 </td>
+                            </tr>
+                            <tr>
+                                <td id="publishing_user_pic_5"> 5 </td>
+                                <td id="publishing_user_name_5"> 5 </td>
+                                <td id="publishing_user_confidence_5"> 0.43 </td>
+                            </tr>
+                            <tr>
+                                <td id="publishing_user_pic_6"> 6 </td>
+                                <td id="publishing_user_name_6"> 6 </td>
+                                <td id="publishing_user_confidence_6"> 0.7 </td>
+                            </tr>
+                            </tbody>
+                        </table> 
+                     </div>
+                 </div>  <!-- end_div for class="tab-content"  -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#publishing_user_tab1" data-toggle="tab">1</a></li>
+                    <li><a href="#publishing_user_tab2" data-toggle="tab">2</a></li>
+                </ul>
+            </div>  <!--  end_div for class="tabbable tabs-below"  -->
+        </div> <!-- end_div for the id= publishing_users_div -->
+
+        <div id="publishing_question_div">
+            <textarea id="publishing_question_show_textarea" disabled></textarea>
+        </div>  <!--  end_div for the id= publishing_question_div  -->
+
+    </div>  <!-- end_div for id= publishing_sidebar -->
 
 </div>
 

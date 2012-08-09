@@ -1,0 +1,138 @@
+
+
+#publishing_left{
+    width: 576px;
+    height: 576px;
+    margin: 2px;
+    positoin: relative;
+    float: left;
+    overflow: hidden;
+    background-color: #C0DEED;
+    -webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+#publishing_sidebar{
+    width: 356px;
+    height: 576px;
+    margin: 2px;
+    float: left;
+    overflow: hidden;
+    background-color: transparent;
+    -webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+#publishing_textarea_div {
+    width: 356px;
+    height: 150px;
+    padding-top: 3px;
+    padding-left: 6px;
+    padding-right: 4px;
+    padding-bottom: 0px;
+}
+
+#publishing_textarea {
+    width: 330px;
+    height: 95px;
+    margin-top: 4px;
+    margin-bottom: 1px;
+}
+
+#publishing_textarea_counter {
+    width: 100px;
+    height: 20px;
+    margin-left: 210px;
+    margin-top: 0px;
+}
+
+#publishing_textarea_input_counter {
+	background-color:transparent;
+	font-size: 11pt;
+	color: #000;
+	padding: 0px;
+	text-align: center;
+    margin: 0px;
+	border: none;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-width: initial;
+	border-color: initial;
+	-moz-box-shadow: none;
+	width: 36px;
+}
+
+
+#publishing_parameter_div {
+    width: 356px;
+    height: 100px;
+    margin: 0px;
+    padding-top: 0px;
+    padding-left: 1px;
+    padding-right: 1px;
+    /*background-color: #FFF;*/
+}
+
+
+/* contains publishing_show_btn_div and publishing_publish_btn_div */
+#publishing_show_button_div {
+    width: 356px;
+    height: 40px;
+    margin: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#publishing_show_btn_div {
+    width: 170px;
+    height: 40px;
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    overflow: hidden;
+}
+
+#publishing_publish_btn_div{
+    width: 170px;
+    height: 40px;
+    margin-left: 186px;
+    padding: 0px;
+}
+
+#publishing_show_btn {
+    width: 160px;
+    height: 40px;
+    margin: 0px;
+}
+
+#publishing_publish_btn {
+    width: 160px;
+    height: 40px;
+}
+
+
+#publishing_question_div {
+    width: 356px;
+    height: 100px;
+    margin-top: 2px;
+    padding-left: 4px;
+    padding-right: 3px;
+}
+
+#publishing_question_show_textarea {
+    width: 336px;
+    height: 60px;
+}
+
+#publishing_users_div {
+    width: 346px;
+    height: 200px;
+    margin-top: 4px;
+    margin-left: 4px;
+    background-color: #FFF;
+}
+

@@ -75,6 +75,27 @@ jQuery.fn.springy = function(params) {
 	var nearest = null;
 	var dragged = null;
 
+
+    // the function   is added by swarm, just for the processing of the textarea and the node
+    // is to check whether to add or remove the node
+    process_selected_node = function(node) {
+        var chosen = node.data.chosen;
+        var label = node.data.label;
+        var space_str =  "              ";
+        var original_textarea = jQuery('#calculating_textarea').val();
+        if (chosen == 1) {
+            original_textarea = original_textarea + label + space_str;
+            jQuery("#calculating_textarea").val(original_textarea);
+        } else {
+            if(original_textarea.search(label) != -1) {
+                original_textarea = original_textarea.replace(label+space_str, "");
+                jQuery("#calculating_textarea").val(original_textarea);
+            }
+        }
+
+        return true;
+    };
+
 	jQuery(canvas).mousedown(function(e) {
 		jQuery('.actions').hide();
 
@@ -86,8 +107,9 @@ jQuery.fn.springy = function(params) {
 			// Part of the same bug mentioned later. Store the previous mass
 			// before upscaling it for dragging.
 			dragged.point.m = 10000.0;
-            // TODO // will select some nodes when click them, and then show them in the textarea, for later calculate!!
-            jQuery("#username_1").text(dragged.node.data.label);   //added by swarm
+            // TODO added by swarm // will select some nodes when click them, and then show them in the textarea, for later calculate!!
+            selected.node.data.chosen = !selected.node.data.chosen;  //neg the node whether it is chosen or not
+            process_selected_node(selected.node);
 		}
 
 		renderer.start();
@@ -251,7 +273,7 @@ jQuery.fn.springy = function(params) {
 				ctx.fillStyle = "#FFFFA0";
 			} else if (nearest !== null && nearest.node !== null && nearest.node.id === node.id) {
 				ctx.fillStyle = "#EEEEEE";
-            } else if (node.data.chosen == '0') {           //added by swarm
+            } else if (node.data.chosen == 1) {           //added by swarm  (if the node is chosen by the program, then should be highlighted: yellow!)
                 ctx.fillStyle = "#FFFF00";
 			} else {
 				ctx.fillStyle = "#C0DEED";
