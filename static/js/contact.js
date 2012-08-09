@@ -3,8 +3,6 @@ jQuery.noConflict();
 //document.ready() function!
 jQuery(function(){
 	change_active_nav();
-	init_nodes();
-
 });
 
 
@@ -14,12 +12,3 @@ function change_active_nav(){
 	jQuery('#nav_contact_id').addClass('active');
 } 
 
-
-function init_nodes() {
-	var springy = jQuery('#analyzing_canvas').springy({
-			graph: graph,
-			stiffness: 200,
-			repulsion: 400,
-			damping: 0.7
-			});
-}

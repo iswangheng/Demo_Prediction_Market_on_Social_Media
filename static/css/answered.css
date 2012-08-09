@@ -25,3 +25,24 @@
 	border-radius: 2px;
 }
 
+
+#answered_questions_div {
+    width: 356px;
+    height: 200px;
+    margin: 0px;
+    /*background-color: #FFF;*/
+}
+
+#answered_graph_div {
+    width: 356px;
+    height: 200px;
+    margin: 0px;
+    padding: 1px;
+}
+
+#answered_total_result_div {
+    width: 356px;
+    height: 170px;
+    margin-top: 3px;
+    /*background-color: #FFF;*/
+}

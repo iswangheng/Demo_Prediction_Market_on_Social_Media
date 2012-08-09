@@ -9,53 +9,6 @@ $:render.header()
 <script src="static/js/analyzing.js"></script>
 
 
-<script type="text/javascript" charset="utf-8">
-	var graph = new Graph();
-
-	var nodes_list = new Array();
-	var nodes = new Array();
-//	nodes_list = [{label:'Swarm', con:'1'}, {label: 'Benben', con:'2'}, {label:'james', con:'3'}];
-	for(var i = 0; i < 38; i++) {
-		var default_node = {label: 'default', con: '1', chosen: '0'}
-		default_node.label = "default_"+ i + "";
-		default_node.con = i;
-		if (i%3 == 0) {
-			default_node.chosen = '1';
-		}
-		nodes_list.push(default_node);
-	}
-
-	for (var i = 0; i < nodes_list.length; i++) {
-		var new_node = graph.newNode({label: nodes_list[i].label, con: nodes_list[i].con, chosen: nodes_list[i].chosen});
-		nodes.push(new_node);
-	}
-
-	for (var i = 1; i < nodes.length; i++) {
-		graph.newEdge(nodes[0], nodes[i]);
-	}		
-
-//	graph.newEdge(nodes[0], nodes[1], {color: '#00a0b0'});
-/*
-	jQuery(function(){
-			var springy = jQuery('#springydemo').springy({
-				graph: graph,
-				stiffness: 200,
-				repulsion: 400,
-				damping: 0.7
-				});
-		})
-*/
-
-	var new_graph = new Graph();
-	var new_nodes_list = new Array();
-	new_nodes_list = [{label:'Swarm', con:'1'}, {label: 'Benben', con:'2'}, {label:'james', con:'3'}];
-	for(var i = 0; i < new_nodes_list.length; i++) {
-		new_graph.newNode({label: nodes_list[i].label});
-	}
-
-
-</script>
-
 <div id="parent">
 
     <div id="analyzing_left">

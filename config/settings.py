@@ -2,6 +2,8 @@
 # coding: utf-8
 import web
 
+db = web.database(dbn='mysql', db='prediction_market', user='root', pw='swarm')
+ 
 render = web.template.render('templates')
 
 web.config.debug = True

@@ -283,9 +283,8 @@ jQuery.fn.springy = function(params) {
 
 			ctx.textAlign = "left";
 			ctx.textBaseline = "top";
-			ctx.font = "16px Verdana, sans-serif";
 			ctx.fillStyle = "#000000";
-			ctx.font = "16px Verdana, sans-serif";
+			ctx.font = "14px Verdana, sans-serif";
 			var text = typeof(node.data.label) !== 'undefined' ? node.data.label : node.id;
 			ctx.fillText(text, s.x - boxWidth/2 + 5, s.y - 8);
 

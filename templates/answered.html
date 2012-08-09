@@ -8,13 +8,83 @@ $:render.header()
 
 <script src="static/js/answered.js"></script>
 
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load('visualization', '1', {packages: ['corechart']});
+</script>
+
+
 <div id="parent">
 
     <div id="answered_left">
-		<canvas id = "springydemo" width = "576" height = "576" />
+		<canvas id = "answered_canvas" width = "576" height = "576" />
     </div>
     
     <div id="answered_sidebar">
+        <div id="answered_questions_div">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Payment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="#" id="answered_question_1" class="answered_question">Is it true that iPhone5 this is the One First 1 !!</a>
+                            <input id="answered_question_id_1" type="hidden" value='1' />
+                        </td>
+                        <td>Market</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href='#' id="answered_question_2" class="answered_question">Is it true that iPhone 5 will come out at Sept 2012? 2012?Sept. 2012?ept. 2012?</a>
+                            <input id="answered_question_id_2" type="hidden" value='2' />
+                        </td>
+                        <td>Pay as you go</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination pagination-centered" id="answered_pagination_div">
+                <ul>
+                    <li><a href="#">Prev</a></li>
+                    <li class="active">
+                        <a href="#">1</a>
+                    </li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">Next</a></li>
+                </ul>
+            </div>  <!--  end_div for id= answered_pagination_div  -->
+        </div>  <!--  end_div for id= answered_questions_div  -->
+
+        <div id="answered_graph_div">
+            
+        </div>
+
+        <div id="answered_total_result_div">
+            <table class="table">
+                <thead>
+                    <tr><th colspan="2"> Statistical Report </th></tr>
+                </thead>
+                <tr>
+                    <td><strong>Payment Method: </strong></td>
+                    <td>Pay as you go</td>
+                </tr>
+                <tr>
+                    <td><strong>Overall Confidence: </strong></td>
+                    <td>0.87 </td>
+                </tr>
+                <tr>
+                    <td><strong>Cost: </strong></td>
+                    <td>1235</td>
+                </tr>
+            </table>
+            
+        </div>
+
     </div> <!-- end_div for id= answered_sidebar -->
 
 </div>  <!--  end_div for id= parent  -->
