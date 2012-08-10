@@ -3,9 +3,11 @@ jQuery.noConflict();
 //document.ready() function!
 jQuery(function(){
 	change_active_nav();
-    init_nodes('#calculating_canvas');
+    var canvas_html = jQuery('#calculating_left').html();
+
+    init_nodes();
     calculating_calculate_btn();
-    calculating_clear_btn();
+    calculating_clear_btn(canvas_html);
 });
 
 
@@ -16,33 +18,36 @@ function change_active_nav(){
 } 
 
 
-function init_nodes(canvas) {
-	var graph = new Graph();
-
-	var nodes_list = new Array();
-	var nodes = new Array();
-//	nodes_list = [{label:'Swarm', con:'1'}, {label: 'Benben', con:'2'}, {label:'james', con:'3'}];
-	for(var i = 0; i < 38; i++) {
-		var default_node = {label: 'default', con: '1', chosen: 0}
-		default_node.label = "default_"+ i + "";
-		default_node.con = i;
-		nodes_list.push(default_node);
-	}
-
-	for (var i = 0; i < nodes_list.length; i++) {
-		var new_node = graph.newNode({label: nodes_list[i].label, con: nodes_list[i].con, chosen: nodes_list[i].chosen});
-		nodes.push(new_node);
-	}
-
-	for (var i = 1; i < nodes.length; i++) {
-		graph.newEdge(nodes[0], nodes[i]);
-	}		
-
-    var springy = jQuery(canvas).springy({
-            graph: graph,
-            stiffness: 200,
-            repulsion: 400,
-            damping: 0.7
+function init_nodes() {
+    var new_graph = new Graph();
+	var post_data = "show_nodes_from_server";
+    /*var new_graph = new Graph();*/
+    var nodes_key_value_list = new Array();
+	jQuery.ajax({
+        url: 'show_nodes_from_server',
+		type: 'POST',
+        data: {signal: post_data},
+        dataType: 'json',
+		success: function(data){
+                nodes_list = data.nodes_list;
+                edges_list = data.edges_list;
+                for (var i = 0; i < nodes_list.length; i++) {
+                    var node = new_graph.newNode({label: nodes_list[i].node_label, chosen: 0});
+                    nodes_key_value_list[nodes_list[i].node_number] = node;
+                }
+                for (var i = 0; i < edges_list.length; i++) {
+                    new_graph.newEdge(nodes_key_value_list[edges_list[i].follower], nodes_key_value_list[edges_list[i].node]);
+                }
+               			}
+		}).done(function() {
+                //TODO
+			});
+ 
+    var springy = jQuery('#calculating_canvas').springy({
+            graph: new_graph,
+            stiffness: 50,
+            repulsion: 200,
+            damping: 0.6
             });
 }
 
@@ -52,13 +57,13 @@ function calculating_calculate_btn() {
     });
 }
 
-function calculating_clear_btn() {
+function calculating_clear_btn(canvas_html) {
     jQuery('#clear_btn').click(function() {
-        location.reload();
-/*      //the reason I use location.reload is that there is still some problem with the canvas springy, 
- *      //god, i guess I will handle this until very later
         //here I use two sentences is for different browsers
         jQuery('#calculating_textarea').val("");
-        jQuery('#calculating_textarea').text("");*/
+        jQuery('#calculating_textarea').text("");
+        jQuery('#calculating_left').html("");
+        jQuery('#calculating_left').html(canvas_html);
+        init_nodes();
     });
 }

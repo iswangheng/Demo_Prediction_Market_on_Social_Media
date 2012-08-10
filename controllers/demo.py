@@ -24,7 +24,9 @@ def get_nodes():
     result = db.query(query_str)
     nodes = []
     for node in result:
-        node_dict= {'node_number': node.node_number}
+        node_label = node.node_number + "_testName"
+        node_dict= {'node_label': node_label}
+        node_dict.update({'node_number': node.node_number})
         node_dict.update({'node_confidence': node.node_confidence})
         node_dict.update({'node_pic': node.node_pic})
         nodes.append(node_dict) 

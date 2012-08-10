@@ -18,10 +18,17 @@
     height: 576px;
     margin: 2px;
     float: left;
-    overflow: hidden;
     background-color: transparent;
     -webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
 }
 
+#analyzing_sidebar_user_table {
+    width: 350px;
+    height: 520px;
+    padding: 1px;
+    border:1px solid;
+    overflow-y: auto;
+    background-color: #FFF;
+}
