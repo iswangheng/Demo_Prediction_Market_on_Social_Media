@@ -1,3 +1,14 @@
+
+
+/* for the nav_bar user_pic */
+.nav_user_pic {
+	height: 30px;
+	width: 30px;
+    padding: 0px;
+	margin-top: 5px;
+}
+
+
 .swarm_container {
     width: 940px;
     padding: 0px;

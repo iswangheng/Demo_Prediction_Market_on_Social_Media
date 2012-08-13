@@ -32,3 +32,11 @@
     overflow-y: auto;
     background-color: #FFF;
 }
+
+
+.analyzing_user_pic {
+    width: 26px;
+    height: 26px;
+    padding: 0px;
+    margin: 0px;
+}

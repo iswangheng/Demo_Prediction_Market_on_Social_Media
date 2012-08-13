@@ -1,6 +1,6 @@
-$def with()
+$def with(session)
 
-$:render.header()
+$:render.header(session)
 
 
 <script src="static/js/springy.js"></script>
@@ -36,9 +36,9 @@ $:render.header()
                     <th> Confidence </th>
                 </tr>
             </thead>-->
-            <tbody>
+            <tbody id="analyzing_user_tbody">
                 <tr id="analyzing_user_1">
-                    <td> pic </td>
+                    <td> <div class="analyzing_user_pic"><img src="" /></div> </td>
                     <td> name </td>
                     <td> 0.973 </td>
                 </tr>
