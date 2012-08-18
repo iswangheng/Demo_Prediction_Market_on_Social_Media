@@ -40,3 +40,15 @@
     padding: 0px;
     margin: 0px;
 }
+
+#analyzing_left_user_tweets {
+	width: 576px;
+	height: 576px;
+	margin: 0px;
+	padding: 0px;
+	overflow: auto;
+}
+
+.make_it_hidden {
+	display: none;
+}

@@ -14,6 +14,23 @@ $:render.header(session)
     <div id="analyzing_left">
 		<canvas id = "analyzing_canvas" width = "576" height = "576" />
     </div>
+
+	<div id="analyzing_left_user_tweets" class='make_it_hidden'>
+        <table class="table table-striped">
+			<thead>
+            <tr>
+                <th> Name </th>
+                <th> Tweet </th>
+            </tr>
+            </thead>
+            <tbody id="analyzing_user_tweets_tbody">
+                <tr id="analyzing_user_tweets_1">
+                    <td> name </td>
+                    <td> twet</td>
+                </tr>
+            </tbody>
+        </table>
+	</div>
     
     <div id="analyzing_sidebar">
 		<ul class="nav nav-tabs">
@@ -37,11 +54,12 @@ $:render.header(session)
                 </tr>
             </thead>-->
             <tbody id="analyzing_user_tbody">
-                <tr id="analyzing_user_1">
+                <tr class ="analyzing_user_tr" id="analyzing_user_1">
+                    <td> 1 </td>
                     <td> <div class="analyzing_user_pic"><img src="" /></div> </td>
-                    <td> name </td>
+					<td><a href=# class="analyzing_user_sidebar_username"> name </a></td>
                     <td> 0.973 </td>
-                </tr>
+	              </tr>
             </tbody>
             </table>
         </div>

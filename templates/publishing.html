@@ -47,7 +47,7 @@ $:render.header(session)
                         <tr>
                             <td><strong>Budget: </strong></td>
                             <td>
-                                <input id="publishing_budget_input" type="text" class="input-small" value="8675"/>
+                                <input id="publishing_budget_input" type="text" class="input-small" value="-1"/>
                             </td>
                         </tr>
                         </thead>
@@ -71,67 +71,43 @@ $:render.header(session)
 
         <div id="publishing_users_div">
             <div class="tabbable tabs-below">
-                <div class="tab-content">
+                <div class="tab-content" id="publishing_user_tab_div">
                     <div class="tab-pane active" id="publishing_user_tab1">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th> User Pics</th>
-                                    <th> User Name</th>
-                                    <th> User Confidence</th>
+                                    <th> No. </th>
+                                    <th> Pic</th>
+                                    <th> Name</th>
+                                    <th> Confidence</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="publishing_user_tbody_1">
                             <tr>
-                                <td id="publishing_user_pic_1"> 1 </td>
-                                <td id="publishing_user_name_1"> 1 </td>
-                                <td id="publishing_user_confidence_1"> 0.3 </td>
+                                <td> 1 </td>
+                                <td> 1 </td>
+                                <td> 1 </td>
+                                <td> 0.3 </td>
                             </tr>
                             <tr>
-                                <td id="publishing_user_pic_2"> 2 </td>
-                                <td id="publishing_user_name_2"> 2 </td>
-                                <td id="publishing_user_confidence_2"> 0.43 </td>
+                                <td> 2 </td>
+                                <td> 2 </td>
+                                <td> 2 </td>
+                                <td> 0.43 </td>
                             </tr>
                             <tr>
-                                <td id="publishing_user_pic_3"> 3 </td>
-                                <td id="publishing_user_name_3"> 3 </td>
-                                <td id="publishing_user_confidence_3"> 0.7 </td>
+                                <td> 3 </td>
+                                <td> 3 </td>
+                                <td> 3 </td>
+                                <td> 0.7 </td>
                             </tr>
                             </tbody>
                         </table>
-                    </div>
-                    <div class="tab-pane" id="publishing_user_tab2">
-                         <table class="table">
-                            <thead>
-                                <tr>
-                                    <th> User Pics</th>
-                                    <th> User Name</th>
-                                    <th> User Confidence</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td id="publishing_user_pic_4"> 4 </td>
-                                <td id="publishing_user_name_4"> 4 </td>
-                                <td id="publishing_user_confidence_4"> 0.3 </td>
-                            </tr>
-                            <tr>
-                                <td id="publishing_user_pic_5"> 5 </td>
-                                <td id="publishing_user_name_5"> 5 </td>
-                                <td id="publishing_user_confidence_5"> 0.43 </td>
-                            </tr>
-                            <tr>
-                                <td id="publishing_user_pic_6"> 6 </td>
-                                <td id="publishing_user_name_6"> 6 </td>
-                                <td id="publishing_user_confidence_6"> 0.7 </td>
-                            </tr>
-                            </tbody>
-                        </table> 
-                     </div>
+                    </div>  <!--  end_div for id='publishing_user_tab1'  -->
                  </div>  <!-- end_div for class="tab-content"  -->
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs" id="publishing_user_ul">
                     <li class="active"><a href="#publishing_user_tab1" data-toggle="tab">1</a></li>
-                    <li><a href="#publishing_user_tab2" data-toggle="tab">2</a></li>
+                    <!--<li><a href="#publishing_user_tab2" data-toggle="tab">2</a></li>-->
                 </ul>
             </div>  <!--  end_div for class="tabbable tabs-below"  -->
         </div> <!-- end_div for the id= publishing_users_div -->

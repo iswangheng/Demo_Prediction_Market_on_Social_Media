@@ -3,10 +3,9 @@
 
 import web
 import json
-import os
 import sys
 import time
-import commands
+from time import gmtime, strftime
 import tweepy
 from config import settings
 
@@ -17,21 +16,48 @@ db = settings.db
 
 
 
-def get_nodes():
+# which_one has two kinds of options: graph and historical
+# if graph: will return the node_confidence
+# if historical: will return the node_historical_confidence
+def get_nodes(which_one):
     """
         will get all the nodes from db
     """
-    query_str = "SELECT node_number, node_label, node_confidence, node_pic FROM nodes"
+    if(which_one == 'graph'):
+        query_str = "SELECT node_number, node_label, node_confidence, node_pic FROM nodes"
+    else:
+        query_str = "SELECT node_number, node_label, node_historical_confidence, node_pic FROM nodes"
     result = db.query(query_str)
     nodes = []
     for node in result:
         node_label = node.node_label
         node_dict= {'node_label': node_label}
         node_dict.update({'node_number': node.node_number})
-        node_dict.update({'node_confidence': node.node_confidence})
+        if(which_one == "graph"):
+            node_dict.update({'node_confidence': node.node_confidence})
+        else:
+            node_dict.update({'node_confidence': node.node_historical_confidence})
         node_dict.update({'node_pic': node.node_pic})
+        node_dict.update({'node_chosen': 0})    # 0 means not chosen, 1 means chosen
+        node_dict.update({'node_answer': 2})   # 1 means yes, 0 means no, 2 means still not been answered
         nodes.append(node_dict) 
     return nodes
+
+
+def set_nodes_chosen(chosen_nodes):
+    """docstring for set_nodes_chosen"""
+    pass
+
+def set_nodes_answered(nodes_list, yes_nodes, no_nodes):
+    """docstring for set_nodes_answered"""
+    for node in nodes_list:
+        if node['node_number'] in yes_nodes:
+            print 'yes node: ', node['node_number']
+            node['node_answer'] = 1
+        elif node['node_number'] in no_nodes:
+            print 'no node: ', node['node_number']
+            node['node_answer'] = 0
+    return nodes_list
 
 def get_edges():
     """ 
@@ -46,7 +72,26 @@ def get_edges():
         edges.append(edge_dict)
     return edges
 
+def get_tweets_by_screenname(screen_name):
+    tweets = []
+    query_str = "SELECT tweet_text, tweet_created_at FROM tweets WHERE user_screen_name = '%s' ORDER BY tweet_created_at DESC LIMIT 15" % screen_name
+    print 'query_str:------------------->  ', query_str
+    result = db.query(query_str)
+    for tweet in result:
+        tweet_dict = {'tweet_text': tweet.tweet_text}
+# below datatime has sth wrong. handle it in the future!!!  TODO
+        #tweet_dict.update({'tweet_created_at': tweet.tweet_created_at})
+        tweets.append(tweet_dict)
+    return tweets
 
+
+def store_question(question_time, user_name, question, payment_method):
+    """store_question into the db (table: question)"""
+    try:
+        db.insert('question', time=question_time, user_name=user_name, question=question, payment_method=payment_method)
+        print "!!!!#####insert db@@@##questions##########"
+    except:
+        print "db insert error"
 
 #just to get the api instance of tweepy
 def get_tweepAPI(session):
@@ -87,7 +132,7 @@ class ShowGraph:
     def POST(self):
         print 'ShowGraph Class!!!!'
         nodes_list = []
-        nodes_list = get_nodes()
+        nodes_list = get_nodes('graph')
         edges_list = []
         edges_list = get_edges()
         data = {'nodes_list': nodes_list}
@@ -97,6 +142,83 @@ class ShowGraph:
         print "AJAX:  will now return~~~~~~~~~~~~"
         return data_string
 
+
+# will get user tweets according to the user screen name
+class GetUserTweets:
+    def POST(self):
+        print 'Get User Tweets by user_screen_name'
+        user_screen_name = web.input().signal
+        tweets_list = get_tweets_by_screenname(user_screen_name)
+        data = {'tweets_list': tweets_list}
+        web.header('Content-Type', 'application/json')
+        data_string = json.dumps(data)
+        print "Get User Tweets AJAX:  will now return~~~~~~~~~~~~"
+        return data_string
+
+
+# will return all the nodes confidence by their historical records
+class ReturnHistoricalConfidence:
+    def POST(self):
+        print "Return Historical Confidence"
+        nodes_list = []
+        nodes_list = get_nodes('historical')
+        data = {'nodes_list': nodes_list}
+        web.header('Content-Type', 'application/json')
+        data_string = json.dumps(data)
+        print "AJAX ReturnHistoricalConfidence:  will now return~~~~~~~~~~~~"
+        return data_string
+
+
+
+# will take the input as the question and payment_method , store them into the question table and then tweet it.
+class PublishQuestion:
+    def POST(self):
+        print "Publish Question"
+        user_name = web.ctx.session.user_screen_name
+        question = web.input().question
+        payment_method = web.input().payment_method
+        question_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        print user_name, ' Question: ', question, " payment_method: ", payment_method, " time: ", question_time
+        store_question(question_time, user_name, question, payment_method)
+        print "AJAX Publish Question:  will now return~~~~~~~~~~~~"
+        return 
+
+# will return all the nodes and edges, but this time with the information of answers(yes or no)
+class ReturnAnsweredNodes:
+    def POST(self):
+        print 'Return Answered Nodes'
+        yes_nodes = ['1','5','6']
+        no_nodes = ['2','7','9','15']
+        nodes_list = []
+        nodes_list = get_nodes('graph')
+        nodes_list = set_nodes_answered(nodes_list, yes_nodes, no_nodes)
+        edges_list = []
+        edges_list = get_edges()
+        data = {'nodes_list': nodes_list}
+        data.update({'edges_list': edges_list})
+        web.header('Content-Type', 'application/json')
+        data_string = json.dumps(data)
+        print "AJAX:  will now return~~~~~~~~~~~~"
+        return data_string
+
+
+# will return the questions and the answer to the default question
+class ReturnQuestionsAnswer:
+    def POST(self):
+        print "return Questions and answer"
+        questions_list = get_questions()
+        default_question_info = get_default_question_info()
+        question_title = default_question_info.question_title
+        yes_num = default_question_info.yes_num
+        no_num = default_question_info.no_num
+        data = {'questions_list': questions_list}
+        data.update({'question_title': question_title})
+        data.update({'yes_num': yes_num})
+        data.update({'no_num': no_num})
+        web.header('Content-Type', 'application/json')
+        data_string = json.dumps(data)
+        print "AJAX----returnQuestions and Answer:  will now return~~~~~~~~~~~~"
+        return data_string
 
 
 #to render the index page
@@ -122,7 +244,14 @@ class Calculating:
 # To Render the Questions Publishing Page
 class Publishing:
     def GET(self):
-        return render.publishing(web.ctx.session)
+        try:
+            print "web.ctx.session.user_screen_name %s" % web.ctx.session.user_screen_name 
+            if web.ctx.session.user_screen_name == '':
+                web.seeother('sign_in_with_twitter')
+            return render.publishing(web.ctx.session)
+        except AttributeError, msg:
+            print "ERROR.. : %s" % msg
+            web.seeother('sign_in_with_twitter')
 
 # TO Render the Questions Answered Page
 class Answered:

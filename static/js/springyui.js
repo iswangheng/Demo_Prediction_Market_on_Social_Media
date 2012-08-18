@@ -80,15 +80,15 @@ jQuery.fn.springy = function(params) {
     // is to check whether to add or remove the node
     process_selected_node = function(node) {
         var chosen = node.data.chosen;
-        var label = node.data.label;
+        var name = '@' + node.data.name;
         var space_str =  "              ";
         var original_textarea = jQuery('#calculating_textarea').val();
         if (chosen == 1) {
-            original_textarea = original_textarea + label + space_str;
+            original_textarea = original_textarea + name + space_str;
             jQuery("#calculating_textarea").val(original_textarea);
         } else {
-            if(original_textarea.search(label) != -1) {
-                original_textarea = original_textarea.replace(label+space_str, "");
+            if(original_textarea.search(name) != -1) {
+                original_textarea = original_textarea.replace(name+space_str, "");
                 jQuery("#calculating_textarea").val(original_textarea);
             }
         }
@@ -114,6 +114,7 @@ jQuery.fn.springy = function(params) {
 
 		renderer.start();
 	});
+
 
 	jQuery(canvas).mousemove(function(e) {
 		var pos = jQuery(this).offset();
@@ -204,10 +205,10 @@ jQuery.fn.springy = function(params) {
 			var arrowWidth;
 			var arrowLength;
 
-			var weight = typeof(edge.data.weight) !== 'undefined' ? edge.data.weight : 1.0;
+			var weight = typeof(edge.data.weight) !== 'undefined' ? edge.data.weight : 0.5;
 
 			ctx.lineWidth = Math.max(weight *  2, 0.1);
-			arrowWidth = 1 + ctx.lineWidth;
+			arrowWidth = 1.3 + ctx.lineWidth;
 			arrowLength = 8;
 
 			var directional = typeof(edge.data.directional) !== 'undefined' ? edge.data.directional : true;
@@ -266,7 +267,7 @@ jQuery.fn.springy = function(params) {
 			var boxHeight = node.getHeight();
 
 			// fill background
-			ctx.clearRect(s.x - boxWidth/2, s.y - 10, boxWidth, 20);
+            ctx.clearRect(s.x - boxWidth/2, s.y - 10, boxWidth, 20);
 
 			// fill background
 			if (selected !== null && nearest.node !== null && selected.node.id === node.id) {
@@ -275,11 +276,15 @@ jQuery.fn.springy = function(params) {
 				ctx.fillStyle = "#EEEEEE";
             } else if (node.data.chosen == 1) {           //added by swarm  (if the node is chosen by the program, then should be highlighted: yellow!)
                 ctx.fillStyle = "#FFFF00";
-			} else {
-				ctx.fillStyle = "#C0DEED";
+			} else if (node.data.answer == 1) {         //added by swarm (if the node answered yes, then blue, else if answerd no, color is red, else(2): white)
+                ctx.fillStyle = "#0066ff";        // answer yes: blue
+            } else if (node.data.answer == 0) {
+                ctx.fillStyle = "#F00";         // answer no: red
+            } else {
+				ctx.fillStyle = "#FFFFFF";          // no answer, not chosen: white
 			}
 
-			ctx.fillRect(s.x - boxWidth/2, s.y - 10, boxWidth, 20);
+            ctx.fillRect(s.x - boxWidth/2, s.y - 10, boxWidth, 20);
 
 			ctx.textAlign = "left";
 			ctx.textBaseline = "top";

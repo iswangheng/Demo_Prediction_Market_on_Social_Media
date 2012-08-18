@@ -32,11 +32,13 @@ function init_nodes() {
                 nodes_list = data.nodes_list;
                 edges_list = data.edges_list;
                 for (var i = 0; i < nodes_list.length; i++) {
-                    var node = new_graph.newNode({label: nodes_list[i].node_label, chosen: 0});
+                    var node = new_graph.newNode({label: nodes_list[i].node_number, name: nodes_list[i].node_label, confidence: nodes_list[i].node_confidence, chosen: 0});
                     nodes_key_value_list[nodes_list[i].node_number] = node;
                 }
                 for (var i = 0; i < edges_list.length; i++) {
-                    new_graph.newEdge(nodes_key_value_list[edges_list[i].follower], nodes_key_value_list[edges_list[i].node]);
+					var col = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 156)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+					var edge_data = {color: col};
+                    new_graph.newEdge(nodes_key_value_list[edges_list[i].follower], nodes_key_value_list[edges_list[i].node], edge_data);
                 }
                			}
 		}).done(function() {
@@ -46,7 +48,7 @@ function init_nodes() {
     var springy = jQuery('#calculating_canvas').springy({
             graph: new_graph,
             stiffness: 50,
-            repulsion: 200,
+            repulsion: 140,
             damping: 0.6
             });
 }
