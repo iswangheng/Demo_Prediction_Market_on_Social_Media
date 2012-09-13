@@ -25,39 +25,38 @@ $:render.header(session)
             <table class="table">
                 <thead>
                     <tr>
+                        <th>No.</th>
                         <th>Question</th>
                         <th>Payment</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td>1</td>
                         <td>
-                            <a href="#" id="answered_question_1" class="answered_question">df</a>
+                            <a href="#" id="answered_question_1" class="answered_question">Can we meet Kangaroos at Brisbane? (Con threshold = 0.9) </a>
                             <input id="answered_question_id_1" type="hidden" value='1' />
                         </td>
                         <td>Market</td>
                     </tr>
                     <tr>
+                        <td>2</td>
                         <td>
-                            <a href='#' id="answered_question_2" class="answered_question">asdfadf:</a>
+                            <a href='#' id="answered_question_2" class="answered_question">Is Brisbane the most East city of Australia? (Con threshold = 0.8)</a>
                             <input id="answered_question_id_2" type="hidden" value='2' />
+                        <td> Market</td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <a href="#" id="answered_question_3" class="answered_question">Is Brisbane the most East city of Australia? (Budget = 1.8)</a>
+                            <input id="answered_question_id_3" type="hidden" value='3' />
                         </td>
                         <td>Pay as you go</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="pagination pagination-centered" id="answered_pagination_div">
-                <ul>
-                    <li><a href="#">Prev</a></li>
-                    <li class="active">
-                        <a href="#">1</a>
-                    </li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">Next</a></li>
-                </ul>
-            </div>  <!--  end_div for id= answered_pagination_div  -->
         </div>  <!--  end_div for id= answered_questions_div  -->
 
         <div id="answered_graph_div">
@@ -69,17 +68,16 @@ $:render.header(session)
                 <thead>
                     <tr><th colspan="2"> Statistical Report </th></tr>
                 </thead>
-                <tr>
                     <td><strong>Payment Method: </strong></td>
-                    <td>Pay as you go</td>
+                    <td id="answered_payment_method">Market </td>
                 </tr>
                 <tr>
                     <td><strong>Overall Confidence: </strong></td>
-                    <td>0.87 </td>
+                    <td id="answered_confidence">0.901 </td>
                 </tr>
                 <tr>
                     <td><strong>Cost: </strong></td>
-                    <td>1235</td>
+                    <td id='answered_cost'>5.169</td>
                 </tr>
             </table>
             

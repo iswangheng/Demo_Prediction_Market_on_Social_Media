@@ -1,0 +1,75 @@
+$def with(session)
+
+$:render.header(session)
+
+<script src="static/js/followers.js"></script>
+
+<div id="parent">
+
+	<div class="followers_sidebar">
+	    <div class="sidebar_user_info">
+		  <div class="userpic">
+			<a href=""><img src=$session.user_img width="64px" height="64px"/></a>
+		  </div>
+		  <div class="name">
+			<a href="">$session.user_name</a>
+		  </div>
+		  <div class="screenname">
+			<a href="#">@$session.user_screen_name</a>
+		  </div>
+		  <div class="userlocation">
+			<a href="#">$session.user_location</a>
+		  </div>
+		  <hr>
+		  <table id="user_info_table" border="0" cellpadding="2"> 
+			<tr>
+			  <td>
+		        <label>
+				<a href="#"><strong id="statuses_count">$session.user_statuses_count</strong></a>
+		        </label> 
+			  </td>
+			  <td>  
+				<a href="#"><strong id="following_count">$session.user_following_count
+			  <td>
+				<a href="#"><strong id="followers_count">$session.user_followers_count</strong></a> 
+			  </td>
+			</tr>
+			<tr>
+			  <td>
+				<a href="#">TWEETS</a> 
+			  </td>
+			  <td>
+				<a href="#">FOLLOWING</a> 			
+			  </td>
+			  <td>
+				<a href="#">FOLLOWERS</a> 			
+			  </td>
+			</tr>
+		  </table>
+		</div>  <!--  end for class=sidebar_user_info div -->
+
+    </div>   <!--  end-div for class=followers_sidebar  -->
+
+    <div class="followers_div">
+        <span align="center"><h3>Followers of @$session.user_screen_name</h3></span>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th> Pic </th>
+                    <th> Name </th>
+                    <th> Latest Tweet </th>
+                </tr>
+            </thead>
+            <tbody id="followers_tbody">
+                <tr class ="followers_tr" id="followers_tr_1">
+                    <td> <div class="followers_user_pic"><img src="" /></div> </td>
+					<td><a href=# class="followers_user_username"> name </a></td>
+                    <td> ... </td>
+	            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>   <!--  end-div for id=parent -->
+
+$:render.foot()

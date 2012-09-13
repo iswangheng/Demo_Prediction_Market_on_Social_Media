@@ -16,7 +16,10 @@ if web.ctx.get('session') is None:
                                   'user_img':'',
                                   'user_name':'',
                                   'user_screen_name':'',
-                                  'user_location':''})
+                                  'user_location':'',
+                                  'user_statuses_count':'',
+                                  'user_following_count':'',
+                                  'user_followers_count':''})
 
     print "!!!! init the session la !!!"
     web.ctx.session = session

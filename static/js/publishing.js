@@ -9,7 +9,7 @@ jQuery(function(){
     var canvas_html = jQuery('#publishing_left').html();
     init_nodes();
 
-    publishing_show_users();
+    publishing_show_users_btn(canvas_html);
     publishing_publish_question();
 });
 
@@ -72,44 +72,95 @@ function monitor_textarea(){
 } 
 
 
-function publishing_show_users() {
+function publishing_show_users_btn(canvas_html) {
     jQuery('#publishing_show_btn').click(function() {
+        jQuery('#publishing_left').html(canvas_html);
         var first_tab_div = jQuery("#publishing_user_tab1").clone();
         var li_before = jQuery('#publishing_user_ul').find('li').first().clone();
         // first clear the users part
         jQuery('#publishing_user_tab_div').html(first_tab_div);
         jQuery('#publishing_user_ul').html(li_before);
 
+        // here post_data is just for demo
+        // 0 means payment_method == 'Pay s you go' and will use the pay as you go and budget
+        // 1 means 'Market' and confidence should be larger than 0.9
+        // 2 means 'Market' and confidence should be larget than 0.8
+	    var post_data = "";
+        var payment_method = "Market";
+        if (jQuery('#tab_market').hasClass('active')) {
+            payment_method = "Market";
+        } else {
+            payment_method = "Pay as you go";
+        }
+        if (payment_method == 'Market') {
+            post_data = jQuery('#publishing_confidence_input').val();
+        } else {
+            post_data = jQuery("#publishing_budget_input").val();         // use the Pay as You go
+        }
+	    jQuery.ajax({
+            url: 'publishing_show_users',
+		    type: 'POST',
+            data: {signal: post_data, payment: payment_method},
+            dataType: 'json',
+		    success: function(data){
+                // will show user graph in the left first
+                var new_graph = new Graph();
+                var nodes_key_value_list = new Array();
+                graph_nodes_list = data.graph_nodes_list;
+                edges_list = data.edges_list;
+                for (var i = 0; i < graph_nodes_list.length; i++) {
+                    var node = new_graph.newNode({label: graph_nodes_list[i].node_number, name: graph_nodes_list[i].node_label, confidence: graph_nodes_list[i].node_confidence, chosen: graph_nodes_list[i].node_chosen});
+                    nodes_key_value_list[graph_nodes_list[i].node_number] = node;
+                }
+                for (var i = 0; i < edges_list.length; i++) {
+					var col = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 156)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+					var edge_data = {color: col};
+                    new_graph.newEdge(nodes_key_value_list[edges_list[i].follower], nodes_key_value_list[edges_list[i].node], edge_data);
+                }
 
-        // user_number: means that how many users are recommended
-        var user_number = 7;
-        // tab_number means that how many tabs are needed to show the users
-        var tab_number = Math.ceil(user_number/3);
-        var last_tab_user_number = user_number%3;
+                var springy = jQuery('#publishing_canvas').springy({
+                    graph: new_graph,
+                    stiffness: 50,
+                    repulsion: 140,
+                    damping: 0.6
+                });
 
-        // below is to change the content of the first tab
-        var first_tab_tbody = jQuery("#publishing_user_tbody_1");
-        var first_tab_tbody_first_tr = first_tab_tbody.find('tr').first();
-        var first_tab_tbody_second_tr = first_tab_tbody_first_tr.next();
-        var first_tab_tboby_third_tr = first_tab_tbody_second_tr.next();
-        first_tab_tbody_first_tr.find('td').first().text('num_1');
-        first_tab_tbody_first_tr.find('td').first().next().text('pic_1');
-        first_tab_tbody_first_tr.find('td').first().next().next().text('name_1');
-        first_tab_tbody_first_tr.find('td').first().next().next().next().text('confidence_1');
-        first_tab_tbody_second_tr.find('td').first().text('num_2');
-        first_tab_tbody_second_tr.find('td').first().next().text('pic_2');
-        first_tab_tbody_second_tr.find('td').first().next().next().text('name_2');
-        first_tab_tbody_second_tr.find('td').first().next().next().next().text('confidence_2');
-        first_tab_tboby_third_tr.find('td').first().text('num_3');
-        first_tab_tboby_third_tr.find('td').first().next().text('pic_3');
-        first_tab_tboby_third_tr.find('td').first().next().next().text('name_3');
-        first_tab_tboby_third_tr.find('td').first().next().next().next().text('confidence_3');
 
-        var tab_div_clone = first_tab_div.clone();
-        var before_tab_div = first_tab_div;
-        tab_div_clone.removeClass('active');
+                // show right bottom users
+                var nodes_list = data.nodes_list;
+                // user_number: means that how many users are recommended
+                var user_number = nodes_list.length;
+                // tab_number means that how many tabs are needed to show the users
+                var tab_number = Math.ceil(user_number/3);
+                var last_tab_user_number = user_number%3;
+        
+                // below is to change the content of the first tab
+                var first_tab_tbody = jQuery("#publishing_user_tbody_1");
+                var first_tab_tbody_first_tr = first_tab_tbody.find('tr').first();
+                var first_tab_tbody_second_tr = first_tab_tbody_first_tr.next();
+                var first_tab_tboby_third_tr = first_tab_tbody_second_tr.next();
+                first_tab_tbody_first_tr.find('td').first().text(nodes_list[0].node_num);
+                first_tab_tbody_first_tr.find('td').first().next().find('img').attr('src', nodes_list[0].node_pic);
+                first_tab_tbody_first_tr.find('td').first().next().next().text('@' + nodes_list[0].node_name);
+                first_tab_tbody_first_tr.find('td').first().next().next().next().text(nodes_list[0].node_confidence);
+                first_tab_tbody_second_tr.find('td').first().text(nodes_list[1].node_num);
+                first_tab_tbody_second_tr.find('td').first().next().find('img').attr('src', nodes_list[1].node_pic);
+                first_tab_tbody_second_tr.find('td').first().next().next().text('@' + nodes_list[1].node_name);
+                first_tab_tbody_second_tr.find('td').first().next().next().next().text(nodes_list[1].node_confidence);
+                first_tab_tboby_third_tr.find('td').first().text(nodes_list[2].node_num);
+                first_tab_tboby_third_tr.find('td').first().next().find('img').attr('src', nodes_list[2].node_pic);
+                first_tab_tboby_third_tr.find('td').first().next().next().text('@' + nodes_list[2].node_name);
+                first_tab_tboby_third_tr.find('td').first().next().next().next().text(nodes_list[2].node_confidence);
 
+                var tab_div_clone = first_tab_div.clone();
+                var before_tab_div = first_tab_div;
+                tab_div_clone.removeClass('active');
+
+        // this for belong to the jQuery.ajax part
         for (var i = 1; i < tab_number; i++) {
+            // j is the index of nodes_list[]
+            // just to get one node from the nodes_list
+            var j = 3 + (i-1) * 3;
             if (i != tab_number -1) {
                 var tab_n = i + 1;
                 var tab_div_id = "publishing_user_tab" + tab_n;
@@ -121,18 +172,18 @@ function publishing_show_users() {
                 var tab_tbody_first_tr = tab_tbody.find('tr').first();
                 var tab_tbody_second_tr = tab_tbody_first_tr.next();
                 var tab_tboby_third_tr = tab_tbody_second_tr.next();
-                tab_tbody_first_tr.find('td').first().text('num_');
-                tab_tbody_first_tr.find('td').first().next().text('pic_');
-                tab_tbody_first_tr.find('td').first().next().next().text('name_');
-                tab_tbody_first_tr.find('td').first().next().next().next().text('confidence_');
-                tab_tbody_second_tr.find('td').first().text('num_');
-                tab_tbody_second_tr.find('td').first().next().text('pic_');
-                tab_tbody_second_tr.find('td').first().next().next().text('name_');
-                tab_tbody_second_tr.find('td').first().next().next().next().text('confidence_');
-                tab_tboby_third_tr.find('td').first().text('num_');
-                tab_tboby_third_tr.find('td').first().next().text('pic');
-                tab_tboby_third_tr.find('td').first().next().next().text('name_');
-                tab_tboby_third_tr.find('td').first().next().next().next().text('confidence_');
+                tab_tbody_first_tr.find('td').first().text(nodes_list[j].node_num);
+                tab_tbody_first_tr.find('td').first().next().find('img').attr('src', nodes_list[j].node_pic);
+                tab_tbody_first_tr.find('td').first().next().next().text(nodes_list[j].node_name);
+                tab_tbody_first_tr.find('td').first().next().next().next().text(nodes_list[j].node_confidence);
+                tab_tbody_second_tr.find('td').first().text(nodes_list[j+1].node_num);
+                tab_tbody_second_tr.find('td').first().next().find('img').attr('src', nodes_list[j+1].node_pic);
+                tab_tbody_second_tr.find('td').first().next().next().text(nodes_list[j+1].node_name);
+                tab_tbody_second_tr.find('td').first().next().next().next().text(nodes_list[j+1].node_confidence);
+                tab_tboby_third_tr.find('td').first().text(nodes_list[j+2].node_num);
+                tab_tboby_third_tr.find('td').first().next().find('img').attr('src', nodes_list[j+2].node_pic);
+                tab_tboby_third_tr.find('td').first().next().next().text(nodes_list[j+2].node_name);
+                tab_tboby_third_tr.find('td').first().next().next().next().text(nodes_list[j+2].node_confidence);
 
                 tab_div_clone.insertAfter(before_tab_div);
                 before_tab_div = tab_div_clone;
@@ -157,10 +208,10 @@ function publishing_show_users() {
                  /*below is to change the content of the current tab*/
                 for (var i = 0; i < 3; i++) {
                     if (i < last_tab_user_number) {
-                        tab_tbody_tr.find('td').first().text('last_td_1');
-                        tab_tbody_tr.find('td').first().next().text('last_td_22');
-                        tab_tbody_tr.find('td').first().next().next().text('last_td_13');
-                        tab_tbody_tr.find('td').first().next().next().next().text('last_td_4');
+                        tab_tbody_tr.find('td').first().text(nodes_list[j+i].node_num);
+                        tab_tbody_tr.find('td').first().next().find('img').attr('src', nodes_list[j+i].node_pic);
+                        tab_tbody_tr.find('td').first().next().next().text(nodes_list[j+i].node_name);
+                        tab_tbody_tr.find('td').first().next().next().next().text(nodes_list[j+i].node_confidence);
                         tab_tbody_tr = tab_tbody_tr.next();
                     } else {
                         tab_tbody_tr_next = tab_tbody_tr.next();
@@ -177,9 +228,11 @@ function publishing_show_users() {
                 li_clone.find('a').text(tab_n);
                 li_clone.insertAfter(li_before);
                 li_before = li_clone;
-            }
-        }; 
+            }  // end of else
+        };      // end of for , belongs to the jQuery.ajax() part
 
+            }   // end of success: function(data){
+		});
     });
 }
 

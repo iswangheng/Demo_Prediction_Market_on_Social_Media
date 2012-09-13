@@ -55,7 +55,20 @@ function init_nodes() {
 
 function calculating_calculate_btn() {
     jQuery('#calculate_btn').click(function(){
-        jQuery('#calculating_sidebar_confidence_cost').hide().fadeIn(1000);
+        var users_selected_str = jQuery("#calculating_textarea").val();
+        jQuery.ajax({
+            url: "crowds_analyzing_calculating",
+            type: 'POST',
+            data: {signal: users_selected_str},
+            dataType: 'json',
+            success: function(data) {
+                jQuery('#publishing_market_confidence_input').val(data.confidence);
+                jQuery('#publishing_market_cost_input').val(data.market_cost);
+                jQuery('#publishing_pay_confidence_input').val(data.confidence);
+                jQuery('#publishing_pay_cost_input').val(data.pay_cost);
+                jQuery('#calculating_sidebar_confidence_cost').hide().fadeIn(1000);
+            }
+        });
     });
 }
 

@@ -6,7 +6,7 @@ $def with(session)
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Prediction Market</title>
+    <title>SoWise</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="demo-market-header">
     <meta name="author" content="swarm">
@@ -18,6 +18,7 @@ $def with(session)
 
     <!-- Le styles -->
 	<link href="static/css/swarm.css" rel="stylesheet">
+	<link href="static/css/followers.css" rel="stylesheet">
 	<link href="static/css/analyzing.css" rel="stylesheet">
 	<link href="static/css/calculating.css" rel="stylesheet">
 	<link href="static/css/publishing.css" rel="stylesheet">
@@ -46,16 +47,17 @@ $def with(session)
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		  </a>
-		  <a class="brand" href="index.html">Prediction Market</a>
+		  <a class="brand" href="index.html">SoWise</a>
 			<div class="nav-collapse">
 			  <ul class="nav">
 				<li class="active" id="nav_home_id"><a href="index.html">Home</a></li>
-				<li id="nav_analyzing_id"><a href="analyzing.html">Crowds Analyzing</a></li>
-				<li id="nav_calculating_id"><a href="calculating.html">Wisdom Calculating</a></li>
-				<li id="nav_publishing_id"><a href="publishing.html">Questions Publishing</a></li>
-				<li id="nav_answered_id"><a href="answered.html">Questions Answered</a></li>
+				<li id="nav_followers_id"><a href="followers.html">User Followers</a></li>
+				<li id="nav_analyzing_id"><a href="analyzing.html">User Profiling</a></li>
+				<li id="nav_calculating_id"><a href="calculating.html">Crowds Analyzing</a></li>
+				<li id="nav_publishing_id"><a href="publishing.html">Task Publishing</a></li>
+				<li id="nav_answered_id"><a href="answered.html">Answers Collecting(Demo Only)</a></li>
 				<li id="nav_about_id"><a href="about.html">About</a></li>
-				<li id="nav_contact_id"><a href="contact.html">Contact</a></li>
+				<!--<li id="nav_contact_id"><a href="contact.html">Contact</a></li>-->
 			  </ul>
 			  <ul class="nav pull-right">
 				<li><div class="nav_user_pic"><img src=$session.user_img /></div></li>
