@@ -6,6 +6,7 @@ import json
 import sys
 import math
 import shlex
+import time
 from time import gmtime, strftime
 import tweepy
 from config import settings
@@ -171,6 +172,7 @@ def get_nodes_chosen_for_demo(which_case, parameter):
 # return nodes given a budget
 # will use a simplified algorithm
 def get_nodes_chosen_by_budget(budget):
+    time.sleep(0.6)
     nodes_nums = []
     nodes_list = []
     node_confidence_dict = {}
